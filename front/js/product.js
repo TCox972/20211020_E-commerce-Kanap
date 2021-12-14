@@ -40,9 +40,32 @@ fetch("http://localhost:3000/api/products/" + id)
         document.getElementById("addToCart")
             .addEventListener("click", (event) => {
                 event.preventDefault();
-                if(selectColor.value =="" || selectQuantity.value =="0" || selectQuantity.value > 100){
+                if (selectColor.value == "" || selectQuantity.value == "0" || selectQuantity.value > 100) {
                     alert("Veuillez sélectionner une couleur et indiquer une quantité (0 - 100)");
+                } else {
+                    addToCart(productObject, selectColor.value, parseInt(selectQuantity.value));
                 }
-
             })
     });
+
+function addToCart(product, color, quantity) {
+    let panier = JSON.parse(localStorage.getItem("panier"));
+    if (!panier) panier = {};
+    if (panier[product._id]) {
+        if (panier[product._id].quantity[color]) {
+            panier[product._id].quantity[color] += quantity;
+        } else {
+            panier[product._id].quantity[color] = quantity;
+        }
+    } else {
+        let p = {
+            name: product.name,
+            price: product.price,
+            image: product.imageUrl,
+            quantity: {}
+        }
+        p.quantity[color] = quantity;
+        panier[product._id] = p;
+    }
+    localStorage.setItem("panier", JSON.stringify(panier));
+}
