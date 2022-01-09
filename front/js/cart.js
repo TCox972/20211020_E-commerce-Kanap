@@ -58,14 +58,27 @@ displayTotal();
 
 // ----------------- Modification de la quantité dans le panier
 
-function modifyQuantity() {
-  var test = document.querySelector(".itemQuantity")
-    .closest("article")
-    .dataset.id;
-}
+var changeQuantity = document.querySelectorAll("input");
 
-modifyQuantity();
-displayTotal();
+for (let i = 0; i < changeQuantity.length; i++) {
+
+  changeQuantity[i]
+    .addEventListener("change", (event) => {
+      event.preventDefault;
+      event.stopPropagation;
+
+      var idSelect = changeQuantity[i].closest("article").dataset.id
+      var colorSelect = changeQuantity[i].closest("article").dataset.color
+      var newQuantity = changeQuantity[i].value
+
+      let panier = JSON.parse(localStorage.getItem("panier"))
+      
+      panier[idSelect].quantity[colorSelect] = newQuantity
+
+      localStorage.setItem("panier", JSON.stringify(panier));
+      displayTotal()
+    })
+  }
 
 // ---------------- Suppression d'un élément du panier
 
@@ -92,7 +105,7 @@ for (let i = 0; i < supprBtn.length; i++) {
     })
   }
 
-console.log(panier)
+
 
 
 
