@@ -1,6 +1,5 @@
 
 let panier = JSON.parse(localStorage.getItem("panier"));
-console.log(panier)
 
 // ---------------- Récupération des éléments du localstorage et attribution à la page panier
 
@@ -97,14 +96,13 @@ for (let i = 0; i < supprBtn.length; i++) {
       let panier = JSON.parse(localStorage.getItem("panier"))
       delete panier[idDelete].quantity[colorDelete]
       
-      if (panier[idDelete].quantity == false) delete panier[idDelete]
+      if (Object.values(panier[idDelete].quantity) < 1) delete panier[idDelete]
 
-      supprBtn[i].closest("article").remove()
       localStorage.setItem("panier", JSON.stringify(panier));
+      supprBtn[i].closest("article").remove()
       displayTotal()
     })
   }
-
 
 
 
