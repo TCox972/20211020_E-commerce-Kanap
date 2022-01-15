@@ -106,18 +106,65 @@ for (let i = 0; i < supprBtn.length; i++) {
 
 //----------------- Analyse des inputs du formulaire de contact
 
+// ****** Récupération des éléments du formulaire
+
 var firstName = document.getElementById("firstName");
+var lastName = document.getElementById("lastName");
+var cityName = document.getElementById("city");
+var address = document.getElementById("address");
+var email = document.getElementById("email");
+var submitForm = document.getElementById("order");
+
+// ****** Définition des RegEx
+
+var nameValidation = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ-]+( [a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]+)*$/;
+var emailValidation = /^[a-z0-9]$/;
+
+//****** Controle du prénom
 
 firstName.addEventListener("change", (event) => {
   event.preventDefault;
-
+  event.stopPropagation;
   let contactFirstName = firstName.value;
-  if(/^[a-zA-Z]{1,}$/.test(contactFirstName)){
+  if(nameValidation.test(contactFirstName)){
     console.log("OK")
+    document.getElementById("firstNameErrorMsg").textContent = "";
+    firstName.style.boxShadow = "0px 0px 10px green";
   }else{
     console.log("KO")
+    document.getElementById("firstNameErrorMsg").textContent = "Veuillez entrer un prénom valide."
+    firstName.style.boxShadow = "0px 0px 10px red";
   }
 })
 
+//****** Controle du nom
 
+lastName.addEventListener("change", (event) => {
+  event.preventDefault;
+  let contactLastName = lastName.value;
+  if(nameValidation.test(contactLastName)){
+    console.log("OK")
+    document.getElementById("lastNameErrorMsg").textContent = ""
+  }else{
+    console.log("KO")
+    document.getElementById("lastNameErrorMsg").textContent = "Veuillez entrer un nom valide."
+  }
+})
+
+//****** Controle de la ville
+
+
+cityName.addEventListener("change", (event) => {
+  event.preventDefault;
+  let contactCityName = cityName.value;
+  if(nameValidation.test(contactCityName)){
+    console.log("OK")
+    document.getElementById("cityErrorMsg").textContent = ""
+  }else{
+    console.log("KO")
+    document.getElementById("cityErrorMsg").textContent = "Veuillez entrer un nom de ville valide."
+  }
+})
+
+//****** Controle de l'email
 
