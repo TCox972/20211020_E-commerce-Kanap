@@ -104,6 +104,20 @@ for (let i = 0; i < supprBtn.length; i++) {
     })
   }
 
+//----------------- Analyse des inputs du formulaire de contact
+
+var firstName = document.getElementById("firstName");
+
+firstName.addEventListener("change", (event) => {
+  event.preventDefault;
+
+  let contactFirstName = firstName.value;
+  if(/^[a-zA-Z]{1,}$/.test(contactFirstName)){
+    console.log("OK")
+  }else{
+    console.log("KO")
+  }
+})
 
 
 
