@@ -31,8 +31,6 @@ for (let productId in panier) {
   }
 }
 
-
-
 // ---------------- Total panier
 
 function displayTotal() {
@@ -63,21 +61,21 @@ for (let i = 0; i < changeQuantity.length; i++) {
 
   changeQuantity[i]
     .addEventListener("change", (event) => {
-      event.preventDefault;
-      event.stopPropagation;
+      event.preventDefault();
+      event.stopPropagation();
 
       var idSelect = changeQuantity[i].closest("article").dataset.id
       var colorSelect = changeQuantity[i].closest("article").dataset.color
       var newQuantity = changeQuantity[i].value
 
       let panier = JSON.parse(localStorage.getItem("panier"))
-      
+
       panier[idSelect].quantity[colorSelect] = newQuantity
 
       localStorage.setItem("panier", JSON.stringify(panier));
       displayTotal()
     })
-  }
+}
 
 // ---------------- Suppression d'un élément du panier
 
@@ -87,22 +85,22 @@ for (let i = 0; i < supprBtn.length; i++) {
 
   supprBtn[i]
     .addEventListener("click", (event) => {
-      event.preventDefault;
-      event.stopPropagation;
+      event.preventDefault();
+      event.stopPropagation();
 
       var idDelete = supprBtn[i].closest("article").dataset.id
       var colorDelete = supprBtn[i].closest("article").dataset.color
-      
+
       let panier = JSON.parse(localStorage.getItem("panier"))
       delete panier[idDelete].quantity[colorDelete]
-      
+
       if (Object.values(panier[idDelete].quantity) < 1) delete panier[idDelete]
 
       localStorage.setItem("panier", JSON.stringify(panier));
       supprBtn[i].closest("article").remove()
       displayTotal()
     })
-  }
+}
 
 //----------------- Analyse des inputs du formulaire de contact
 
@@ -118,20 +116,19 @@ var submitForm = document.getElementById("order");
 // ****** Définition des RegEx
 
 var nameValidation = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ-]+( [a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]+)*$/;
-var emailValidation = /^[a-z0-9]$/;
+var addressValidation = /^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ,-]+( [a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ,-]+)*$/;
+var emailValidation = /^[\w\-\.]+@[\w-]+\.+[\w-]{2,4}$/;
 
 //****** Controle du prénom
 
 firstName.addEventListener("change", (event) => {
-  event.preventDefault;
-  event.stopPropagation;
+  event.preventDefault();
+  event.stopPropagation();
   let contactFirstName = firstName.value;
-  if(nameValidation.test(contactFirstName)){
-    console.log("OK")
+  if (nameValidation.test(contactFirstName)) {
     document.getElementById("firstNameErrorMsg").textContent = "";
     firstName.style.boxShadow = "0px 0px 10px green";
-  }else{
-    console.log("KO")
+  } else {
     document.getElementById("firstNameErrorMsg").textContent = "Veuillez entrer un prénom valide."
     firstName.style.boxShadow = "0px 0px 10px red";
   }
@@ -140,31 +137,102 @@ firstName.addEventListener("change", (event) => {
 //****** Controle du nom
 
 lastName.addEventListener("change", (event) => {
-  event.preventDefault;
+  event.preventDefault();
   let contactLastName = lastName.value;
-  if(nameValidation.test(contactLastName)){
-    console.log("OK")
+  if (nameValidation.test(contactLastName)) {
+    lastName.style.boxShadow = "0px 0px 10px green";
     document.getElementById("lastNameErrorMsg").textContent = ""
-  }else{
-    console.log("KO")
+  } else {
+    lastName.style.boxShadow = "0px 0px 10px red";
     document.getElementById("lastNameErrorMsg").textContent = "Veuillez entrer un nom valide."
+  }
+})
+
+//****** Controle de l'adresse
+
+address.addEventListener("change", (event) => {
+  event.preventDefault();
+  let contactAddress = address.value;
+  if (addressValidation.test(contactAddress)) {
+    address.style.boxShadow = "0px 0px 10px green";
+    document.getElementById("addressErrorMsg").textContent = ""
+  } else {
+    address.style.boxShadow = "0px 0px 10px red";
+    document.getElementById("addressErrorMsg").textContent = "Veuillez saisir une adresse correcte (N°, voie, complt)."
   }
 })
 
 //****** Controle de la ville
 
-
 cityName.addEventListener("change", (event) => {
-  event.preventDefault;
+  event.preventDefault();
   let contactCityName = cityName.value;
-  if(nameValidation.test(contactCityName)){
-    console.log("OK")
+  if (nameValidation.test(contactCityName)) {
+    cityName.style.boxShadow = "0px 0px 10px green";
     document.getElementById("cityErrorMsg").textContent = ""
-  }else{
-    console.log("KO")
+  } else {
+    cityName.style.boxShadow = "0px 0px 10px red";
     document.getElementById("cityErrorMsg").textContent = "Veuillez entrer un nom de ville valide."
   }
 })
 
-//****** Controle de l'email
+//****** Email control
 
+email.addEventListener("change", (event) => {
+  event.preventDefault();
+  let contactEmail = email.value;
+  if (emailValidation.test(contactEmail)) {
+    email.style.boxShadow = "0px 0px 10px green";
+    document.getElementById("emailErrorMsg").textContent = ""
+  } else {
+    email.style.boxShadow = "0px 0px 10px red";
+    document.getElementById("emailErrorMsg").textContent = "Veuillez entrer un email valide."
+  }
+})
+
+//******** Form control
+
+submitForm.addEventListener("click", event => {
+  event.preventDefault();
+  if (nameValidation.test(firstName.value) == false ||
+    nameValidation.test(lastName.value) == false ||
+    addressValidation.test(address.value) == false ||
+    nameValidation.test(cityName.value) == false ||
+    emailValidation.test(email.value) == false) {
+    alert("Certains champs ne sont pas correctement remplis")
+  } else {
+
+    const contact = {
+      firstName: `${firstName.value}`,
+      lastName: `${lastName.value}`,
+      address: `${address.value}`,
+      city: `${cityName.value}`,
+      email: `${email.value}`
+    }
+    localStorage.setItem("contact", JSON.stringify(contact));
+
+    let products = [];
+
+    var productPanier = document.querySelectorAll("article")
+    for (i=0; i < productPanier.length; i++) {
+      var idProductPanier = productPanier[i].dataset.id
+      products.push(idProductPanier)
+    }
+
+    const aEnvoyer = {
+      contact,
+      products
+    };
+    console.log("aEnvoyer")
+    console.log(aEnvoyer)
+
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      body: JSON.stringify(aEnvoyer),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+})
