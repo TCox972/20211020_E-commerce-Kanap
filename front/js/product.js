@@ -53,9 +53,9 @@ function addToCart(product, color, quantity) {
     if (!panier) panier = {};
     if (panier[product._id]) {
         if (panier[product._id].quantity[color]) {
-            panier[product._id].quantity[color] += quantity;
+            panier[product._id].quantity[color] += parseInt(quantity);
         } else {
-            panier[product._id].quantity[color] = quantity;
+            panier[product._id].quantity[color] = parseInt(quantity);
         }
     } else {
         let p = {
@@ -64,7 +64,7 @@ function addToCart(product, color, quantity) {
             image: product.imageUrl,
             quantity: {}
         }
-        p.quantity[color] = quantity;
+        p.quantity[color] = parseInt(quantity);
         panier[product._id] = p;
     }
     localStorage.setItem("panier", JSON.stringify(panier));

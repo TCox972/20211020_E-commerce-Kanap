@@ -66,7 +66,7 @@ for (let i = 0; i < changeQuantity.length; i++) {
 
       var idSelect = changeQuantity[i].closest("article").dataset.id
       var colorSelect = changeQuantity[i].closest("article").dataset.color
-      var newQuantity = changeQuantity[i].value
+      var newQuantity = parseInt(changeQuantity[i].value)
 
       let panier = JSON.parse(localStorage.getItem("panier"))
 
@@ -214,7 +214,7 @@ submitForm.addEventListener("click", event => {
     let products = [];
 
     var productPanier = document.querySelectorAll("article")
-    for (i=0; i < productPanier.length; i++) {
+    for (i = 0; i < productPanier.length; i++) {
       var idProductPanier = productPanier[i].dataset.id
       products.push(idProductPanier)
     }
@@ -223,8 +223,6 @@ submitForm.addEventListener("click", event => {
       contact,
       products
     };
-    console.log("aEnvoyer")
-    console.log(aEnvoyer)
 
     fetch("http://localhost:3000/api/products/order", {
       method: "POST",
@@ -232,7 +230,15 @@ submitForm.addEventListener("click", event => {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
+    .then(res => {
+      return res.json();
+    }).then((data) => {
+      let orderId = data.orderId
+      window.location.href = `./confirmation.html?id=${orderId}`;
+    }).catch((error) => {
+      console.log(error);
+    })
   }
 
 })
